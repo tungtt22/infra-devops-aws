@@ -1,6 +1,6 @@
 # Define the route table
 resource "aws_route_table" "public-rt" {
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.devops.id}"
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -8,13 +8,13 @@ resource "aws_route_table" "public-rt" {
   }
 
   tags = {
-    Name = "Public Subnet Router Table"
+    Name = "DevOps-Public-Router-Table"
   }
 }
 
 # Define the route table
 resource "aws_route_table" "nat-rt" {
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.devops.id}"
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -22,7 +22,7 @@ resource "aws_route_table" "nat-rt" {
   }
 
   tags = {
-    Name = "NAT Subnet Router Table"
+    Name = "DevOps-NAT-Router-Table"
   }
 }
 

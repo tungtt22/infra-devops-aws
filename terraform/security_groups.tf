@@ -1,7 +1,7 @@
 # Define the security group for public subnet
-resource "aws_security_group" "sgbastion" {
+resource "aws_security_group" "sgbastion_server" {
   name        = "bastion"
-  description = "Allow incoming SSH access"
+  description = "Allow SSH access on Bastion Server"
 
   ingress {
     from_port   = 22
@@ -17,7 +17,7 @@ resource "aws_security_group" "sgbastion" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.devops.id}"
 
   tags = {
     Name = "Bastion Server SG"
@@ -50,7 +50,7 @@ resource "aws_security_group" "sgnat" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.devops.id}"
 
   tags = {
     Name = "NAT Instance SG"
@@ -90,7 +90,7 @@ resource "aws_security_group" "sgnexus" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.devops.id}"
 
   tags = {
     Name = "Nexus Server SG"
@@ -130,7 +130,7 @@ resource "aws_security_group" "sgsonar" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.devops.id}"
 
   tags = {
     Name = "Sonar Server SG"
@@ -170,7 +170,7 @@ resource "aws_security_group" "sgjenkins" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.devops.id}"
 
   tags = {
     Name = "Jenkins Server SG"
@@ -210,7 +210,7 @@ resource "aws_security_group" "sggitlab" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.devops.id}"
 
   tags = {
     Name = "GitLab Server SG"
@@ -250,7 +250,7 @@ resource "aws_security_group" "sgjira" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.devops.id}"
 
   tags = {
     Name = "Jira Server SG"
@@ -290,7 +290,7 @@ resource "aws_security_group" "sgconfluence" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.devops.id}"
 
   tags = {
     Name = "Confluence Server SG"
@@ -330,7 +330,7 @@ resource "aws_security_group" "sgnginx" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.devops.id}"
 
   tags = {
     Name = "NginX Server SG"
@@ -370,7 +370,7 @@ resource "aws_security_group" "sgopenldap" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.devops.id}"
 
   tags = {
     Name = "OpenLDAP Server SG"
@@ -403,7 +403,7 @@ resource "aws_security_group" "sgdb" {
     cidr_blocks = ["${var.public_subnet_cidr}"]
   }
 
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.devops.id}"
 
   tags = {
     Name = "DB SG"

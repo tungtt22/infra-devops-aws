@@ -14,11 +14,14 @@ variable "vpc_cidr" {
 }
 
 # Define subnets
+
+# Public subnets
 variable "public_subnet_cidr" {
   description = "CIDR for the public subnet"
   default = "10.15.1.0/24"
 }
 
+# Application subnets
 variable "application1_subnet_cidr" {
   description = "CIDR for the application1 subnet"
   default = "10.15.2.0/24"
@@ -29,14 +32,26 @@ variable "application2_subnet_cidr" {
   default = "10.15.3.0/24"
 }
 
+# Private subnets
 variable "private1_subnet_cidr" {
   description = "CIDR for the private1 subnet"
-  default = "10.15.12.0/24"
+  default = "10.15.10.0/24"
 }
 
 variable "private2_subnet_cidr" {
   description = "CIDR for the private2 subnet"
-  default = "10.15.13.0/24"
+  default = "10.15.11.0/24"
+}
+
+# Agent subnets
+variable "agent1_subnet_cidr" {
+  description = "CIDR for the agent1 subnet"
+  default = "10.15.16.0/24"
+}
+
+variable "agent2_subnet_cidr" {
+  description = "CIDR for the agent2 subnet"
+  default = "10.15.17.0/24"
 }
 
 ######################################################

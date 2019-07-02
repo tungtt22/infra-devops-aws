@@ -1,21 +1,21 @@
 # Define SSH key pair for our instances
 resource "aws_key_pair" "bastion" {
-  key_name = "devops-bastion"
+  key_name = "devops-bastion-Server"
   public_key = "${file("${var.key_path}")}"
 }
 
 resource "aws_key_pair" "default" {
-  key_name = "devops-akawork"
+  key_name = "devops-akawork-Server"
   public_key = "${file("${var.key_path}")}"
 }
 
 # Define webserver inside the public subnet
-resource "aws_instance" "bastion" {
+resource "aws_instance" "bastion-server" {
    ami  = "${var.ami}"
    instance_type = "t2.nano"
    key_name = "${aws_key_pair.bastion.id}"
    subnet_id = "${aws_subnet.public-subnet.id}"
-   vpc_security_group_ids = ["${aws_security_group.sgbastion.id}"]
+   vpc_security_group_ids = ["${aws_security_group.sgbastion_server.id}"]
    associate_public_ip_address = true
    source_dest_check = false
 
@@ -28,7 +28,7 @@ resource "aws_instance" "bastion" {
   # }
 
   tags = {
-    Name = "bastion"
+    Name = "DevOps-Bastion-Server"
   }
 }
 
@@ -43,7 +43,7 @@ resource "aws_instance" "nat_instance" {
    source_dest_check = false
 
   tags = {
-    Name = "DevOps-NAT"
+    Name = "DevOps-NAT-Server"
   }
 }
 
@@ -59,7 +59,7 @@ resource "aws_instance" "nexus" {
   #  user_data = "${file("./scripts/install_nexus.sh")}"
 
   tags = {
-    Name = "DevOps-Nexus"
+    Name = "DevOps-Nexus-Server"
   }
 }
 
@@ -75,7 +75,7 @@ resource "aws_instance" "sonarqube" {
   #  user_data = "${file("./scripts/install_sonar.sh")}"
 
   tags = {
-    Name = "DevOps-Sonarqube"
+    Name = "DevOps-Sonarqube-Server"
   }
 }
 
@@ -91,7 +91,7 @@ resource "aws_instance" "jenkins" {
   #  user_data = "${file("./scripts/install_jenkins.sh")}"
 
   tags = {
-    Name = "DevOps-Jenkins"
+    Name = "DevOps-Jenkins-Server"
   }
 }
 
@@ -107,7 +107,7 @@ resource "aws_instance" "jira" {
   #  user_data = "${file("./scripts/install_jira.sh")}"
 
   tags = {
-    Name = "DevOps-Jira"
+    Name = "DevOps-Jira-Server"
   }
 }
 
@@ -123,7 +123,7 @@ resource "aws_instance" "confluence" {
   #  user_data = "${file("./scripts/install_confluence.sh")}"
 
   tags = {
-    Name = "DevOps-Confluence"
+    Name = "DevOps-Confluence-Server"
   }
 }
 
@@ -139,7 +139,7 @@ resource "aws_instance" "gitlab" {
   #  user_data = "${file("./scripts/install_gitlab.sh")}"
 
   tags = {
-    Name = "DevOps-GitLab"
+    Name = "DevOps-GitLab-Server"
   }
 }
 
@@ -155,7 +155,7 @@ resource "aws_instance" "nginx" {
   #  user_data = "${file("./scripts/install_nginx.sh")}"
 
   tags = {
-    Name = "DevOps-NginX"
+    Name = "DevOps-NginX-Server"
   }
 }
 
@@ -171,7 +171,7 @@ resource "aws_instance" "openldap" {
   #  user_data = "${file("./scripts/install_openldap.sh")}"
 
   tags = {
-    Name = "DevOps-OpenLDAP"
+    Name = "DevOps-OpenLDAP-Server"
   }
 }
 
