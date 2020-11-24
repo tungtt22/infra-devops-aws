@@ -28,13 +28,8 @@ variable "az_2" {
 }
 
 variable "domain_name" {
-  default     = "demo.example.com"
+  default     = "demo.akawork.io"
   description = "Your domain name"
-}
-
-variable "project_namespace" {
-  default     = "DevOps"
-  description = "Your Project Namespace"
 }
 
 ######################################################
@@ -92,29 +87,15 @@ variable "agent2_subnet_cidr" {
 ######################################################
 
 # Common AMI template using for almost instances
-variable "amis" {
-  type        = "map"
-  description = "Amazon Linux 2 AMI "
-  default = {
-    "us-east-1"      = "ami-0b898040803850657"
-    "us-east-2"      = "ami-0ebbf2179e615c338"
-    "us-west-1"      = "ami-056ee704806822732"
-    "us-west-2"      = "ami-082b5a644766e0e6f"
-    "ap-southeast-1" = "ami-01f7527546b557442"
-  }
+variable "ami_id" {
+  description = "AMI ID for instances"
+  default     = null
 }
 
 # AMI template using for create NAT Instance
-variable "amis_nat" {
-  type        = "map"
-  description = "Amazon Linux AMI "
-  default = {
-    "us-east-1"      = "ami-00a9d4a05375b2763"
-    "us-east-2"      = "ami-00d1f8201864cc10c"
-    "us-west-1"      = "ami-097ad469381034fa2"
-    "us-west-2"      = "ami-0b840e8a1ce4cdf15"
-    "ap-southeast-1" = "ami-01514bb1776d5c018"
-  }
+variable "ami_nat_id" {
+  description = "AMI ID for NAT instance"
+  default     = null
 }
 
 ######################################################
@@ -280,7 +261,7 @@ variable "jira_username" {
 
 variable "jira_password" {
   description = "Please enter password for jira DB"
-  default = "DevOps365"
+  default     = "DevOps365"
 }
 
 ## Confluence
@@ -326,7 +307,7 @@ variable "confluence_username" {
 
 variable "confluence_password" {
   description = "Please enter password for jira DB"
-  default = "DevOps365"
+  default     = "DevOps365"
 }
 
 ######################################################
@@ -334,12 +315,12 @@ variable "confluence_password" {
 ######################################################
 
 variable "nexus_version" {
-  default     = "nexus-3.18.0-01"
+  default     = "nexus-3.19.1-01"
   description = "Version of Nexus Repositpry OSS. https://github.com/sonatype/nexus-public/releases"
 }
 
 variable "sonar_version" {
-  default     = "sonarqube-7.9"
+  default     = "sonarqube-7.9.1"
   description = "Version of SonarQube. https://www.sonarqube.org/downloads/"
 }
 
@@ -389,14 +370,64 @@ variable "squid_port" {
 ##                Default IP Address                ##
 ######################################################
 
+variable "openldap_ip" {
+  default     = "10.15.2.5"
+  description = "IP of OpenLDAP Server"
+}
+
+variable "jira_ip" {
+  default     = "10.15.2.10"
+  description = "IP of Jira Server"
+}
+
+variable "confluence_ip" {
+  default     = "10.15.2.11"
+  description = "IP of Jenkins Server"
+}
+
+variable "jenkins_ip" {
+  default     = "10.15.2.12"
+  description = "IP of Jenkins Server"
+}
+
+variable "sonar_ip" {
+  default     = "10.15.2.13"
+  description = "IP of sonar"
+}
+
+variable "nexus_ip" {
+  default     = "10.15.2.14"
+  description = "IP of Nexus Server"
+}
+
+variable "gitlab_ip" {
+  default     = "10.15.2.15"
+  description = "IP of GitLab Server"
+}
+
+variable "nginx_ip" {
+  default     = "10.15.1.100"
+  description = "IP of NginX Server"
+}
+
 variable "squid_ip" {
   default     = "10.15.1.101"
   description = "IP of Squid Proxy"
 }
 
+variable "nat_ip" {
+  default     = "10.15.1.105"
+  description = "IP of NAT Server"
+}
+
 variable "bastion_ip" {
   default     = "10.15.1.200"
   description = "IP of Bastion Proxy"
+}
+
+variable "zabbix_ip" {
+  default     = "10.15.2.201"
+  description = "IP of Zabbix Server"
 }
 
 variable "grafana_ip" {

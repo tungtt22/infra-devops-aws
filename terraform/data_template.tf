@@ -3,7 +3,7 @@ data "template_file" "sonar_properties" {
   template = file("../scripts/install_sonar.sh.tpl")
 
   vars = {
-    db_endpoint   = aws_db_instance.sonarqube.endpoint
+    db_endpoint   = module.sonarqube.db_endpoint
     db_name       = var.sonar_db_name
     db_password   = var.sonar_password
     db_username   = var.sonar_username
@@ -12,7 +12,7 @@ data "template_file" "sonar_properties" {
 }
 
 # Nexus
-data "template_file" "nexus_properties" {
+data "template_file" "nexus_install" {
   template = file("../scripts/install_nexus.sh.tpl")
 
   vars = {
@@ -25,7 +25,7 @@ data "template_file" "jira_properties" {
   template = file("../scripts/install_jira.sh.tpl")
 
   vars = {
-    jira_version  = var.jira_version
+    jira_version = var.jira_version
   }
 }
 
@@ -34,10 +34,10 @@ resource "template_dir" "jira_config" {
   destination_dir = "../configs/jira/conf.render/"
 
   vars = {
-    db_endpoint   = aws_db_instance.jira.endpoint
-    db_name       = var.jira_db_name
-    db_password   = var.jira_password
-    db_username   = var.jira_username
+    db_endpoint = module.jira.db_endpoint
+    db_name     = var.jira_db_name
+    db_password = var.jira_password
+    db_username = var.jira_username
   }
 }
 
@@ -46,7 +46,7 @@ data "template_file" "confluence_properties" {
   template = file("../scripts/install_confluence.sh.tpl")
 
   vars = {
-    confluence_version  = var.confluence_version
+    confluence_version = var.confluence_version
   }
 }
 
@@ -56,13 +56,20 @@ resource "template_dir" "nginx_conf" {
   destination_dir = "../configs/nginx/conf.render/"
 
   vars = {
-    jenkins_domain_name     = aws_route53_record.jenkins.name
-    sonar_domain_name       = aws_route53_record.sonar.name
-    nexus_domain_name       = aws_route53_record.nexus.name
-    gitlab_domain_name      = aws_route53_record.gitlab.name
-    jira_domain_name        = aws_route53_record.jira.name
-    confluence_domain_name  = aws_route53_record.confluence.name
-    monitor_domain_name     = aws_route53_record.monitor.name
+    jenkins_domain_name    = aws_route53_record.jenkins.name
+    sonar_domain_name      = aws_route53_record.sonar.name
+    nexus_domain_name      = aws_route53_record.nexus.name
+    gitlab_domain_name     = aws_route53_record.gitlab.name
+    jira_domain_name       = aws_route53_record.jira.name
+    confluence_domain_name = aws_route53_record.confluence.name
+    monitor_domain_name    = aws_route53_record.monitor.name
+    monitor_ip             = var.grafana_ip
+    jenkins_ip             = var.jenkins_ip
+    sonar_ip               = var.sonar_ip
+    nexus_ip               = var.nexus_ip
+    gitlab_ip              = var.gitlab_ip
+    jira_ip                = var.jira_ip
+    confluence_ip          = var.confluence_ip
   }
 }
 
@@ -71,7 +78,7 @@ data "template_file" "gitlab_install" {
   template = file("../scripts/install_gitlab.sh.tpl")
 
   vars = {
-    db_endpoint = aws_db_instance.gitlab.endpoint
+    db_endpoint = module.gitlab.db_endpoint
     db_name     = var.gitlab_db_name
     db_password = var.gitlab_password
     db_username = var.gitlab_username
@@ -84,7 +91,7 @@ resource "template_dir" "gitlab_config" {
   destination_dir = "../configs/gitlab/conf.render/"
 
   vars = {
-    db_endpoint = aws_db_instance.gitlab.address
+    db_endpoint = module.gitlab.db_endpoint
     db_name     = var.gitlab_db_name
     db_password = var.gitlab_password
     db_username = var.gitlab_username
@@ -144,7 +151,7 @@ resource "template_dir" "prometheus_config" {
   destination_dir = "../configs/prometheus/conf.render/"
 
   vars = {
-    prometheus_url     = "localhost:9090"
+    prometheus_url = "localhost:9090"
   }
 }
 
@@ -162,6 +169,6 @@ resource "template_dir" "grafana_config" {
   destination_dir = "../configs/grafana/conf.render/"
 
   vars = {
-    prometheus_url     = "http://${var.prometheus_ip}:9090"
+    prometheus_url = "http://${var.prometheus_ip}:9090"
   }
 }

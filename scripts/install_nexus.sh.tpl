@@ -6,7 +6,7 @@ function install_nexus {
     sudo yum update -y
 
     # Install openjdk-1.8
-    sudo yum -y install java-1.8.0-openjdk.x86_64
+    sudo yum -y install java-1.8.0-openjdk.x86_64 htop
 
     cp /etc/profile /etc/profile_backup
     echo 'export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk' | sudo tee -a /etc/profile
@@ -28,6 +28,7 @@ function install_nexus {
     #firewall-cmd --reload
     
     # Create systemd service
+    # Ref: https://help.sonatype.com/repomanager3/installation/run-as-a-service#RunasaService-systemd
     cat > /etc/systemd/system/nexus.service << EOF
 [Unit]
 Description=nexus service
@@ -46,9 +47,9 @@ WantedBy=multi-user.target
 EOF
 
     # Activate the service
-    sudo systemctl daemon-reload
-    sudo systemctl enable nexus.service
-    sudo systemctl start nexus.service
+    systemctl daemon-reload
+    systemctl enable nexus.service
+    systemctl start nexus.service
     echo "[SUCCESS] Nexus installed complete!" >> $LOG_INSTALL
 }
 
